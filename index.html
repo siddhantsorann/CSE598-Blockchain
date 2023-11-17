@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="css/app.css" />
+    <title>SmartContractors</title>
+</head>
+
+<body>
+    <div>
+        <p id="tasksCounter">0 Task</p>
+		<div>
+			<p>New Task</p>
+			<input id="newTaskInput" type="text">
+			<button type="button" onclick="addNewTask()">Add</button>
+			<ul id="taskList">
+			</ul>
+		</div>		
+    </div>
+</body>
+
+</html>
