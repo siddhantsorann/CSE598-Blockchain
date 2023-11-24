@@ -1,4 +1,4 @@
-let contractAddress = '0x26F9292CF02A57059bF0DeBef8066A21575ae886';
+let contractAddress = '0xF804aBBb65a2bb35b0B493e7bC2d07908c6286AF';
 let contractABI = [
 	{
 		"inputs": [
@@ -32,6 +32,24 @@ let contractABI = [
 				"internalType": "uint256",
 				"name": "_taskIndex",
 				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_newName",
+				"type": "string"
+			}
+		],
+		"name": "editTaskName",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
 			}
 		],
 		"name": "getTask",
@@ -49,7 +67,7 @@ let contractABI = [
 						"type": "bool"
 					}
 				],
-				"internalType": "struct Bloc.Task",
+				"internalType": "struct SmartContractors.Task",
 				"name": "",
 				"type": "tuple"
 			}
