@@ -116,21 +116,14 @@ let contractABI = [
 	{
 		"inputs": [
 			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "task",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "isDone",
-						"type": "bool"
-					}
-				],
-				"internalType": "struct SmartContractors.Task[]",
-				"name": "_newTasks",
-				"type": "tuple[]"
+				"internalType": "string[]",
+				"name": "_falseTasks",
+				"type": "string[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "_trueTasks",
+				"type": "string[]"
 			}
 		],
 		"name": "overrideTasks",
@@ -156,4 +149,4 @@ let contractABI = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-]
+];
