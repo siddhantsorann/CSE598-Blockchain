@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTaskList();
 });
 
-const web3Provider = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+const web3Provider = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 
 async function fetchContractInstance() {
     let accounts = await web3Provider.eth.getAccounts();
