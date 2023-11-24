@@ -39,4 +39,16 @@ contract SmartContractors {
     function getTaskCount() external view returns (uint256) {
         return Users[msg.sender].length;
     }
+
+	function overrideTasks(Task[] calldata _newTasks) external {
+        uint256 userTaskCount = Users[msg.sender].length;
+        for (uint256 i = 0; i < userTaskCount; i++) {
+            delete Users[msg.sender][i];
+        }
+        delete Users[msg.sender];
+
+        for (uint256 i = 0; i < _newTasks.length; i++) {
+            Users[msg.sender].push(_newTasks[i]);
+        }
+    }
 }
