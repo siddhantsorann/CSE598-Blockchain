@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTaskList();
 });
 
-const web3Provider = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+const web3Provider = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 
 async function fetchContractInstance() {
     let accounts = await web3Provider.eth.getAccounts();
@@ -37,17 +37,25 @@ function appendTaskToList(id, name, status) {
     taskCheckbox.setAttribute('type', 'checkbox');
     taskCheckbox.setAttribute('id', 'task-' + id + '-checkbox');
     taskCheckbox.checked = status;
+    let taskEditButton = document.createElement('button');
+    taskEditButton.innerHTML = "Edit";
+    taskEditButton.setAttribute('id', 'task-' + id + '-edit-button');
+    let taskDeleteButton = document.createElement('button');
+    taskDeleteButton.innerHTML = "Delete";
+    taskDeleteButton.setAttribute('id', 'task-' + id + '-delete-button');
 
     if (status) {
         listItem.classList.add('completed-task');
     }
 
     taskList.appendChild(listItem);
-    listItem.ondblclick = function () {
+    taskDeleteButton.onclick = function () {
         eraseTask(listItem.id);
     }
     listItem.appendChild(taskName);
     listItem.appendChild(taskCheckbox);
+    listItem.appendChild(taskEditButton);
+    listItem.appendChild(taskDeleteButton);
     taskCheckbox.onclick = function () { modifyTaskStatus(taskCheckbox.id, id); };
 }
 

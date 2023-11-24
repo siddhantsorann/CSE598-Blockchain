@@ -1,4 +1,4 @@
-let contractAddress = '0xC98e87918F1b43d7FEe273c2Fae1e37Dd999f923';
+let contractAddress = '0x45a64a19aBee1a81176f78b62AFC8Fc504F5Cf38';
 let contractABI = [
 	{
 		"inputs": [
