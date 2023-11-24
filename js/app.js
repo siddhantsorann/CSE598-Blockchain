@@ -44,14 +44,14 @@ function dragOver(e) {
     }
   }
   
-function dragEnd() {
+async function dragEnd() {
     selected = null;
     let ulElement = document.getElementById('taskList');
 
     // Get all li elements within the ul
     let liElements = ulElement.querySelectorAll('li');
 
-    let liDataArray = [];
+    let liDataArrayNotDone = [];
 
     // Iterate over the li elements and extract the id, data, and checkbox state
     liElements.forEach(function(li) {
@@ -62,7 +62,7 @@ function dragEnd() {
     let checkboxState = li.querySelector('input[type="checkbox"]').checked;
 
     // Push the id, data, and checkbox state to the array
-    liDataArray.push({ task: liData.replace("EditDelete", ""), isDone: checkboxState });
+    liDataArrayNotDone.push(liData.replace("EditDelete", ""));
     });
 
     ulElement = document.getElementById('taskList-completed');
@@ -70,6 +70,8 @@ function dragEnd() {
     // Get all li elements within the ul
     liElements = ulElement.querySelectorAll('li');
 
+    let liDataArrayDone = [];
+
     // Iterate over the li elements and extract the id, data, and checkbox state
     liElements.forEach(function(li) {
     // Assuming the data is in the text content of the li element
@@ -79,11 +81,14 @@ function dragEnd() {
     let checkboxState = li.querySelector('input[type="checkbox"]').checked;
 
     // Push the id, data, and checkbox state to the array
-    liDataArray.push({ task: liData.replace("EditDelete", ""), isDone: checkboxState });
+    liDataArrayDone.push(liData.replace("EditDelete", ""));
     });
 
+
     // Now, liArray contains all the li elements as an array
-    console.log(liDataArray);
+    
+    const contractInstance = await fetchContractInstance();
+    await contractInstance.methods.overrideTasks(liDataArrayNotDone, liDataArrayDone).send({ from: web3Provider.eth.defaultAccount });
 }
 
 function dragStart(e) {
