@@ -1,4 +1,4 @@
-let contractAddress = '0x45a64a19aBee1a81176f78b62AFC8Fc504F5Cf38';
+let contractAddress = '0x107AB47BE2CaBF83928E1C37d33E2a4B8a0D1714';
 let contractABI = [
 	{
 		"inputs": [
@@ -14,6 +14,19 @@ let contractABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "currentPriority",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -22,6 +35,24 @@ let contractABI = [
 			}
 		],
 		"name": "deleteTask",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_newName",
+				"type": "string"
+			}
+		],
+		"name": "editTaskName",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -47,9 +78,14 @@ let contractABI = [
 						"internalType": "bool",
 						"name": "isDone",
 						"type": "bool"
+					},
+					{
+						"internalType": "int256",
+						"name": "priority",
+						"type": "int256"
 					}
 				],
-				"internalType": "struct Bloc.Task",
+				"internalType": "struct SmartContractors.Task",
 				"name": "",
 				"type": "tuple"
 			}
@@ -65,6 +101,36 @@ let contractABI = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTasks",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "task",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isDone",
+						"type": "bool"
+					},
+					{
+						"internalType": "int256",
+						"name": "priority",
+						"type": "int256"
+					}
+				],
+				"internalType": "struct SmartContractors.Task[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

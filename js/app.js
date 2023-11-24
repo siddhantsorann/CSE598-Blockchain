@@ -52,6 +52,10 @@ function appendTaskToList(id, name, status) {
     taskDeleteButton.onclick = function () {
         eraseTask(listItem.id);
     }
+    taskEditButton.onclick = () => {
+        // make it an input box
+        taskEditButton.innerHTML = "Confirm";
+    }
     listItem.appendChild(taskName);
     listItem.appendChild(taskCheckbox);
     listItem.appendChild(taskEditButton);
