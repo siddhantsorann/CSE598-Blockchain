@@ -1,4 +1,4 @@
-let contractAddress = '0x107AB47BE2CaBF83928E1C37d33E2a4B8a0D1714';
+let contractAddress = '0xF804aBBb65a2bb35b0B493e7bC2d07908c6286AF';
 let contractABI = [
 	{
 		"inputs": [
@@ -11,19 +11,6 @@ let contractABI = [
 		"name": "addTask",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "currentPriority",
-		"outputs": [
-			{
-				"internalType": "int256",
-				"name": "",
-				"type": "int256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -78,11 +65,6 @@ let contractABI = [
 						"internalType": "bool",
 						"name": "isDone",
 						"type": "bool"
-					},
-					{
-						"internalType": "int256",
-						"name": "priority",
-						"type": "int256"
 					}
 				],
 				"internalType": "struct SmartContractors.Task",
@@ -101,36 +83,6 @@ let contractABI = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getTasks",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "task",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "isDone",
-						"type": "bool"
-					},
-					{
-						"internalType": "int256",
-						"name": "priority",
-						"type": "int256"
-					}
-				],
-				"internalType": "struct SmartContractors.Task[]",
-				"name": "",
-				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
