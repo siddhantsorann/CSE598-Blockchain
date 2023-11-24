@@ -37,17 +37,29 @@ function appendTaskToList(id, name, status) {
     taskCheckbox.setAttribute('type', 'checkbox');
     taskCheckbox.setAttribute('id', 'task-' + id + '-checkbox');
     taskCheckbox.checked = status;
+    let taskEditButton = document.createElement('button');
+    taskEditButton.innerHTML = "Edit";
+    taskEditButton.setAttribute('id', 'task-' + id + '-edit-button');
+    let taskDeleteButton = document.createElement('button');
+    taskDeleteButton.innerHTML = "Delete";
+    taskDeleteButton.setAttribute('id', 'task-' + id + '-delete-button');
 
     if (status) {
         listItem.classList.add('completed-task');
     }
 
     taskList.appendChild(listItem);
-    listItem.ondblclick = function () {
+    taskDeleteButton.onclick = function () {
         eraseTask(listItem.id);
+    }
+    taskEditButton.onclick = () => {
+        // make it an input box
+        taskEditButton.innerHTML = "Confirm";
     }
     listItem.appendChild(taskName);
     listItem.appendChild(taskCheckbox);
+    listItem.appendChild(taskEditButton);
+    listItem.appendChild(taskDeleteButton);
     taskCheckbox.onclick = function () { modifyTaskStatus(taskCheckbox.id, id); };
 }
 
