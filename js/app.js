@@ -1,3 +1,5 @@
+let selected = null;
+
 document.addEventListener('DOMContentLoaded', function () {
     loadTaskList();
 });
@@ -14,25 +16,102 @@ async function loadTaskList() {
     const contractInstance = await fetchContractInstance();
     let taskCount = await contractInstance.methods.getTaskCount().call({ from: web3Provider.eth.defaultAccount });
 
-    if (taskCount !== 0) {
-        let index = 0;
-        while (index < taskCount) {
-            let task = await contractInstance.methods.getTask(index).call({ from: web3Provider.eth.defaultAccount });
-            if (task[0] !== '') {
-                appendTaskToList(index, task[0], task[1]);
-            }
-            index++;
+    let tasks = await contractInstance.methods.getAllTasks().call({ from: web3Provider.eth.defaultAccount });
+    console.log("tasks", tasks);
+    tasks.forEach((task, index) => {
+        if(task[0] !== '') {
+            appendTaskToList(index, task[0], task[1]);
         }
-        updateTaskCount();
+    });
+    // if (taskCount !== 0) {
+    //     let index = 0;
+    //     while (index < taskCount) {
+    //         let task = await contractInstance.methods.getTask(index).call({ from: web3Provider.eth.defaultAccount });
+    //         if (task[0] !== '') {
+    //             appendTaskToList(index, task[0], task[1]);
+    //         }
+    //         index++;
+    //     }
+    //     updateTaskCount();
+    // }
+}
+
+function dragOver(e) {
+    if (isBefore(selected, e.target)) {
+      e.target.parentNode.insertBefore(selected, e.target)
+    } else {
+      e.target.parentNode.insertBefore(selected, e.target.nextSibling)
     }
+  }
+  
+function dragEnd() {
+    selected = null;
+    let ulElement = document.getElementById('taskList');
+
+    // Get all li elements within the ul
+    let liElements = ulElement.querySelectorAll('li');
+
+    let liDataArray = [];
+
+    // Iterate over the li elements and extract the id, data, and checkbox state
+    liElements.forEach(function(li) {
+    // Assuming the data is in the text content of the li element
+    let liData = li.textContent.trim(); // Adjust as needed
+
+    // Retrieve the checkbox state (true if checked, false if not checked)
+    let checkboxState = li.querySelector('input[type="checkbox"]').checked;
+
+    // Push the id, data, and checkbox state to the array
+    liDataArray.push({ task: liData.replace("EditDelete", ""), isDone: checkboxState });
+    });
+
+    ulElement = document.getElementById('taskList-completed');
+
+    // Get all li elements within the ul
+    liElements = ulElement.querySelectorAll('li');
+
+    // Iterate over the li elements and extract the id, data, and checkbox state
+    liElements.forEach(function(li) {
+    // Assuming the data is in the text content of the li element
+    let liData = li.textContent.trim(); // Adjust as needed
+
+    // Retrieve the checkbox state (true if checked, false if not checked)
+    let checkboxState = li.querySelector('input[type="checkbox"]').checked;
+
+    // Push the id, data, and checkbox state to the array
+    liDataArray.push({ task: liData.replace("EditDelete", ""), isDone: checkboxState });
+    });
+
+    // Now, liArray contains all the li elements as an array
+    console.log(liDataArray);
+}
+
+function dragStart(e) {
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('text/plain', null)
+    selected = e.target
+}
+
+function isBefore(el1, el2) {
+    let cur
+    if (el2.parentNode === el1.parentNode) {
+        for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {
+        if (cur === el2) return true
+        }
+    }
+    return false;
 }
 
 function appendTaskToList(id, name, status) {
-    console.log("name", name)
-    let taskList = document.getElementById('taskList');
+    
+    let taskList = !status ? document.getElementById('taskList') : document.getElementById('taskList-completed');
     let listItem = document.createElement('li');
     listItem.classList.add('task-item');
     listItem.id = 'task-' + id;
+    listItem.setAttribute("draggable", true);
+    listItem.setAttribute("ondragstart", "dragStart(event)");
+    listItem.setAttribute("ondragover", "dragOver(event)");
+    listItem.setAttribute("ondragend", "dragEnd()");
     let taskName = document.createTextNode(name);
     let taskCheckbox = document.createElement('input');
     taskCheckbox.setAttribute('type', 'checkbox');
@@ -47,6 +126,7 @@ function appendTaskToList(id, name, status) {
 
     if (status) {
         listItem.classList.add('completed-task');
+        //if checked
     }
 
     taskList.appendChild(listItem);

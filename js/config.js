@@ -1,4 +1,4 @@
-let contractAddress = '0x9d46Cd7a8Aa3D09eaDFCFD75702DDbDc892f0bd0';
+let contractAddress = '0x7f2Da48eBf70050728360D0639C89fc8A99732A9';
 let contractABI = [
 	{
 		"inputs": [
@@ -42,6 +42,31 @@ let contractABI = [
 		"name": "editTaskName",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAllTasks",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "task",
+						"type": "string"
+					},
+					{
+						"internalType": "bool",
+						"name": "isDone",
+						"type": "bool"
+					}
+				],
+				"internalType": "struct SmartContractors.Task[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -106,4 +131,4 @@ let contractABI = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-]
+];
