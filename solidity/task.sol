@@ -16,6 +16,10 @@ contract SmartContractors {
         }));
     }
 
+	function getAllTasks() external view returns (Task[] memory) {
+        return Users[msg.sender];
+    }
+
     function getTask(uint _taskIndex) external view returns (Task memory) {
         return Users[msg.sender][_taskIndex];
     }
