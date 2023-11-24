@@ -28,6 +28,7 @@ async function loadTaskList() {
 }
 
 function appendTaskToList(id, name, status) {
+    console.log("name", name)
     let taskList = document.getElementById('taskList');
     let listItem = document.createElement('li');
     listItem.classList.add('task-item');
@@ -54,7 +55,35 @@ function appendTaskToList(id, name, status) {
     }
     taskEditButton.onclick = () => {
         // make it an input box
-        taskEditButton.innerHTML = "Confirm";
+        let inputBox = document.createElement('input');
+        inputBox.type = 'text';
+
+        // Set the input box value to the current task name (you may need to fetch this from your existing elements)
+        inputBox.value = taskName.nodeValue;
+
+        let confirmButton = document.createElement('button');
+        confirmButton.innerHTML = 'Confirm';
+
+        // Create a "Cancel" button
+        let cancelButton = document.createElement('button');
+        cancelButton.innerHTML = 'Cancel';
+
+        // Replace the listItem's content with the input box
+        listItem.innerHTML = ''; // Clear existing content
+        listItem.appendChild(inputBox);
+        listItem.appendChild(confirmButton);
+        listItem.appendChild(cancelButton);
+
+        cancelButton.onclick = () => {
+            listItem.innerHTML = '';
+            listItem.appendChild(taskName);
+            listItem.appendChild(taskCheckbox);
+            listItem.appendChild(taskEditButton);
+            listItem.appendChild(taskDeleteButton);
+        }
+
+        // Focus on the input box to make it ready for editing
+        inputBox.focus();
     }
     listItem.appendChild(taskName);
     listItem.appendChild(taskCheckbox);
@@ -95,6 +124,9 @@ function updateTaskCount() {
 async function addNewTask() {
     let taskName = document.getElementById('newTaskInput').value;
 	document.getElementById('newTaskInput').value = '';
+    if(taskName.length == 0) {
+        return;
+    }
     const contractInstance = await fetchContractInstance();
     let taskCount = await contractInstance.methods.getTaskCount().call({ from: web3Provider.eth.defaultAccount });
     appendTaskToList(taskCount, taskName, false);
