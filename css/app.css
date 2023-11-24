@@ -8,3 +8,7 @@ body {
     width: 50%;
     text-align: center;
 }
+
+.completed-task {
+    text-decoration: line-through;
+}
