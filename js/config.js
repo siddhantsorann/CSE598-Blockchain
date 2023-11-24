@@ -1,4 +1,4 @@
-let contractAddress = '0xF804aBBb65a2bb35b0B493e7bC2d07908c6286AF';
+let contractAddress = '0x9d46Cd7a8Aa3D09eaDFCFD75702DDbDc892f0bd0';
 let contractABI = [
 	{
 		"inputs": [
@@ -106,4 +106,4 @@ let contractABI = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-];
+]

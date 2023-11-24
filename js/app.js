@@ -74,6 +74,17 @@ function appendTaskToList(id, name, status) {
         listItem.appendChild(confirmButton);
         listItem.appendChild(cancelButton);
 
+        confirmButton.onclick = () => {
+            taskName.nodeValue = inputBox.value;
+            listItem.innerHTML = '';
+            listItem.appendChild(taskName);
+            listItem.appendChild(taskCheckbox);
+            listItem.appendChild(taskEditButton);
+            listItem.appendChild(taskDeleteButton);
+
+            editTask(listItem.id, inputBox.value);
+        }
+
         cancelButton.onclick = () => {
             listItem.innerHTML = '';
             listItem.appendChild(taskName);
@@ -99,6 +110,12 @@ async function eraseTask(taskIndex) {
     await contractInstance.methods.deleteTask(taskIndex).send({ from: web3Provider.eth.defaultAccount });
     document.querySelector(taskSelector).remove();
     updateTaskCount();
+}
+
+async function editTask(taskIndex, editedTaskName) {
+    taskIndex = taskIndex.replace('task-', '');
+    const contractInstance = await fetchContractInstance();
+    await contractInstance.methods.editTaskName(taskIndex, editedTaskName).send({ from: web3Provider.eth.defaultAccount });
 }
 
 async function modifyTaskStatus(id, taskIndex) {
