@@ -37,17 +37,23 @@ function appendTaskToList(id, name, status) {
     taskCheckbox.setAttribute('id', 'task-' + id + '-checkbox');
     taskCheckbox.checked = status;
     let taskEditButton = document.createElement('button');
-    taskEditButton.innerHTML = "Edit";
+    taskEditButton.innerHTML = "<i class=\"fas fa-edit\"></i>";
     taskEditButton.setAttribute('id', 'task-' + id + '-edit-button');
     let taskDeleteButton = document.createElement('button');
-    taskDeleteButton.innerHTML = "Delete";
+    taskDeleteButton.innerHTML = "<i class=\"fas fa-trash\"></i>";
     taskDeleteButton.setAttribute('id', 'task-' + id + '-delete-button');
+
+    var taskNameDiv = document.createElement("div");
+    taskNameDiv.setAttribute('id', 'taskname-' + id + '-div');
+    var taskButtonsDiv = document.createElement("div");
+    taskButtonsDiv.setAttribute('id', 'taskbuttons-' + id + '-div');
 
     if (status) {
         listItem.classList.add('completed-task');
     }
-
+    
     taskList.appendChild(listItem);
+    
     taskDeleteButton.onclick = function () {
         eraseTask(listItem.id);
     }
@@ -58,10 +64,10 @@ function appendTaskToList(id, name, status) {
         inputBox.value = taskName.nodeValue;
 
         let confirmButton = document.createElement('button');
-        confirmButton.innerHTML = 'Confirm';
+        confirmButton.innerHTML = '<i class=\"fas fa-edit\"></i>';
 
         let cancelButton = document.createElement('button');
-        cancelButton.innerHTML = 'Cancel';
+        cancelButton.innerHTML = '<i class="fa-solid fa-times"></i>';
 
         listItem.innerHTML = '';
         listItem.appendChild(inputBox);
@@ -71,28 +77,36 @@ function appendTaskToList(id, name, status) {
         confirmButton.onclick = () => {
             taskName.nodeValue = inputBox.value;
             listItem.innerHTML = '';
-            listItem.appendChild(taskName);
-            listItem.appendChild(taskCheckbox);
-            listItem.appendChild(taskEditButton);
-            listItem.appendChild(taskDeleteButton);
+            listItem.appendChild(taskNameDiv);
+            taskNameDiv.appendChild(taskCheckbox);
+            taskNameDiv.appendChild(taskName);
+            listItem.appendChild(taskButtonsDiv);
+            taskButtonsDiv.appendChild(taskEditButton);
+            taskButtonsDiv.appendChild(taskDeleteButton);
 
             editTask(listItem.id, inputBox.value);
         }
 
         cancelButton.onclick = () => {
             listItem.innerHTML = '';
-            listItem.appendChild(taskName);
-            listItem.appendChild(taskCheckbox);
-            listItem.appendChild(taskEditButton);
-            listItem.appendChild(taskDeleteButton);
+            
+            listItem.appendChild(taskNameDiv);
+            taskNameDiv.appendChild(taskCheckbox);
+            taskNameDiv.appendChild(taskName);
+            listItem.appendChild(taskButtonsDiv);
+            taskButtonsDiv.appendChild(taskEditButton);
+            taskButtonsDiv.appendChild(taskDeleteButton);
         }
 
         inputBox.focus();
     }
-    listItem.appendChild(taskName);
-    listItem.appendChild(taskCheckbox);
-    listItem.appendChild(taskEditButton);
-    listItem.appendChild(taskDeleteButton);
+    
+    listItem.appendChild(taskNameDiv);
+    taskNameDiv.appendChild(taskCheckbox);
+    taskNameDiv.appendChild(taskName);
+    listItem.appendChild(taskButtonsDiv);
+    taskButtonsDiv.appendChild(taskEditButton);
+    taskButtonsDiv.appendChild(taskDeleteButton);
     taskCheckbox.onclick = function () { modifyTaskStatus(taskCheckbox.id, id); };
 }
 
@@ -135,7 +149,7 @@ function updateTaskCount() {
     let taskList = document.getElementById('taskList');
     let totalTasks = taskList.childElementCount;
     let tasksCounter = document.getElementById('tasksCounter');
-    tasksCounter.innerText = totalTasks + " Tasks";
+    tasksCounter.innerText = totalTasks + " Task(s)";
 }
 
 async function addNewTask() {
