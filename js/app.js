@@ -23,88 +23,6 @@ async function loadTaskList() {
             appendTaskToList(index, task[0], task[1]);
         }
     });
-    // if (taskCount !== 0) {
-    //     let index = 0;
-    //     while (index < taskCount) {
-    //         let task = await contractInstance.methods.getTask(index).call({ from: web3Provider.eth.defaultAccount });
-    //         if (task[0] !== '') {
-    //             appendTaskToList(index, task[0], task[1]);
-    //         }
-    //         index++;
-    //     }
-    //     updateTaskCount();
-    // }
-}
-
-function dragOver(e) {
-    if (isBefore(selected, e.target)) {
-      e.target.parentNode.insertBefore(selected, e.target)
-    } else {
-      e.target.parentNode.insertBefore(selected, e.target.nextSibling)
-    }
-  }
-  
-async function dragEnd() {
-    selected = null;
-    let ulElement = document.getElementById('taskList');
-
-    // Get all li elements within the ul
-    let liElements = ulElement.querySelectorAll('li');
-
-    let liDataArrayNotDone = [];
-
-    // Iterate over the li elements and extract the id, data, and checkbox state
-    liElements.forEach(function(li) {
-    // Assuming the data is in the text content of the li element
-    let liData = li.textContent.trim(); // Adjust as needed
-
-    // Retrieve the checkbox state (true if checked, false if not checked)
-    let checkboxState = li.querySelector('input[type="checkbox"]').checked;
-
-    // Push the id, data, and checkbox state to the array
-    liDataArrayNotDone.push(liData.replace("EditDelete", ""));
-    });
-
-    ulElement = document.getElementById('taskList-completed');
-
-    // Get all li elements within the ul
-    liElements = ulElement.querySelectorAll('li');
-
-    let liDataArrayDone = [];
-
-    // Iterate over the li elements and extract the id, data, and checkbox state
-    liElements.forEach(function(li) {
-    // Assuming the data is in the text content of the li element
-    let liData = li.textContent.trim(); // Adjust as needed
-
-    // Retrieve the checkbox state (true if checked, false if not checked)
-    let checkboxState = li.querySelector('input[type="checkbox"]').checked;
-
-    // Push the id, data, and checkbox state to the array
-    liDataArrayDone.push(liData.replace("EditDelete", ""));
-    });
-
-
-    // Now, liArray contains all the li elements as an array
-    
-    const contractInstance = await fetchContractInstance();
-    await contractInstance.methods.overrideTasks(liDataArrayNotDone, liDataArrayDone).send({ from: web3Provider.eth.defaultAccount });
-}
-
-function dragStart(e) {
-    e.dataTransfer.effectAllowed = 'move'
-    e.dataTransfer.setData('text/plain', null)
-    selected = e.target
-}
-
-function isBefore(el1, el2) {
-    let cur
-    if (el2.parentNode === el1.parentNode) {
-        for (cur = el1.previousSibling; cur; cur = cur.previousSibling) {
-        if (cur === el2) return true
-        }
-    }
-    return false;
 }
 
 function appendTaskToList(id, name, status) {
@@ -113,10 +31,6 @@ function appendTaskToList(id, name, status) {
     let listItem = document.createElement('li');
     listItem.classList.add('task-item');
     listItem.id = 'task-' + id;
-    listItem.setAttribute("draggable", true);
-    listItem.setAttribute("ondragstart", "dragStart(event)");
-    listItem.setAttribute("ondragover", "dragOver(event)");
-    listItem.setAttribute("ondragend", "dragEnd()");
     let taskName = document.createTextNode(name);
     let taskCheckbox = document.createElement('input');
     taskCheckbox.setAttribute('type', 'checkbox');

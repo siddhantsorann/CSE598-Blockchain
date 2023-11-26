@@ -1,4 +1,4 @@
-let contractAddress = '0xe434D5CA1a4c32236558Edb6caFb31eB6B70fE6E';
+let contractAddress = '0x73E65161872F733d9D99a5bc209fa8679fE169ce';
 let contractABI = [
 	{
 		"inputs": [
@@ -116,24 +116,6 @@ let contractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string[]",
-				"name": "_falseTasks",
-				"type": "string[]"
-			},
-			{
-				"internalType": "string[]",
-				"name": "_trueTasks",
-				"type": "string[]"
-			}
-		],
-		"name": "overrideTasks",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "uint256",
 				"name": "_taskIndex",
 				"type": "uint256"
@@ -149,4 +131,4 @@ let contractABI = [
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-]
+];
