@@ -45,7 +45,6 @@ function appendTaskToList(id, name, status) {
 
     if (status) {
         listItem.classList.add('completed-task');
-        //if checked
     }
 
     taskList.appendChild(listItem);
@@ -53,22 +52,18 @@ function appendTaskToList(id, name, status) {
         eraseTask(listItem.id);
     }
     taskEditButton.onclick = () => {
-        // make it an input box
         let inputBox = document.createElement('input');
         inputBox.type = 'text';
 
-        // Set the input box value to the current task name (you may need to fetch this from your existing elements)
         inputBox.value = taskName.nodeValue;
 
         let confirmButton = document.createElement('button');
         confirmButton.innerHTML = 'Confirm';
 
-        // Create a "Cancel" button
         let cancelButton = document.createElement('button');
         cancelButton.innerHTML = 'Cancel';
 
-        // Replace the listItem's content with the input box
-        listItem.innerHTML = ''; // Clear existing content
+        listItem.innerHTML = '';
         listItem.appendChild(inputBox);
         listItem.appendChild(confirmButton);
         listItem.appendChild(cancelButton);
@@ -92,7 +87,6 @@ function appendTaskToList(id, name, status) {
             listItem.appendChild(taskDeleteButton);
         }
 
-        // Focus on the input box to make it ready for editing
         inputBox.focus();
     }
     listItem.appendChild(taskName);
@@ -123,11 +117,18 @@ async function modifyTaskStatus(id, taskIndex) {
     let task = document.getElementById(taskId);
     const contractInstance = await fetchContractInstance();
     await contractInstance.methods.updateStatus(taskIndex, checkbox.checked).send({ from: web3Provider.eth.defaultAccount });
+
+    task.remove();
+
     if (checkbox.checked) {
         task.classList.add('completed-task');
+        document.getElementById('taskList-completed').appendChild(task);
     } else {
         task.classList.remove('completed-task');
+        document.getElementById('taskList').appendChild(task);
     }
+
+    updateTaskCount();
 }
 
 function updateTaskCount() {
