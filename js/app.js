@@ -23,6 +23,8 @@ async function loadTaskList() {
             appendTaskToList(index, task[0], task[1]);
         }
     });
+
+    updateTaskCount();
 }
 
 function appendTaskToList(id, name, status) {
